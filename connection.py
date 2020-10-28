@@ -1,9 +1,11 @@
 import sys
-#import matplotlib.pyplot as mpl
-#import numpy as np
+from PIL import Image
+import numpy as np
 import time
 import math
+import array
 
+from PyQt5 import  QtGui
 try:
     import sim
 except:
@@ -14,6 +16,13 @@ def radian2degree(angle):
 
 def degree2radian(angle):
     return math.pi*angle/180
+
+def scale_img(im, nR, nC):
+    nR0 = len(im)     # source number of rows 
+    nC0 = len(im[0])  # source number of columns 
+    return [[ im[int(nR0 * r / nR)][int(nC0 * c / nC)]  
+                for c in range(nC)] for r in range(nR)]
+
 
 class Connection(object):
     def __init__(self, radius=7.5, showIm=False):
@@ -41,38 +50,33 @@ class Connection(object):
         self.crane = sim.simxGetObjectHandle(clientID,'Atuador_guindaste',sim.simx_opmode_blocking)[-1]
         self.magnet = sim.simxGetObjectHandle(clientID,'suctionPad',sim.simx_opmode_blocking)[-1]
         self.cam = sim.simxGetObjectHandle(clientID,'Vision_sensor',sim.simx_opmode_blocking)[-1]
+        self.cam2 = sim.simxGetObjectHandle(clientID,'cam2',sim.simx_opmode_blocking)[-1]
         self.proximity_sensor = sim.simxGetObjectHandle(clientID,'Proximity_sensor',sim.simx_opmode_blocking)[-1]
-        self.err_code,resolution,image = sim.simxGetVisionSensorImage(clientID,self.cam,0,sim.simx_opmode_streaming)
-        self.status = sim.simxReadProximitySensor(clientID,self.proximity_sensor,sim.simx_opmode_streaming)[1]
         self.boomStructure = sim.simxGetObjectHandle(clientID,'Braco',sim.simx_opmode_blocking)[-1]
+
+        self.err_code,_,_ = sim.simxGetVisionSensorImage(clientID,self.cam,0,sim.simx_opmode_streaming)
+        self.err_code,_,_ = sim.simxGetVisionSensorImage(clientID,self.cam2,0,sim.simx_opmode_streaming)
+        self.status = sim.simxReadProximitySensor(clientID,self.proximity_sensor,sim.simx_opmode_streaming)[1]
         
-        # Inicia simulacao
-        sim.simxStartSimulation(self.clientID, sim.simx_opmode_blocking)
+        return self.clientID, self.connectionStatus
 
-
-        #if self.showImage:
-            # Enables interactive mode for imshow
-            #mpl.ion()
-        
-        return clientID, self.connectionStatus
-
-    # def convertDistAngle(self, step):
-    #     stepT = step % self.distanceClaw
-    #     self.currentDistanceClaw += stepT
-    #     if self.currentDistanceClaw < 0:
-    #         self.currentDistanceClaw+=self.distanceClaw
-    #     elif self.currentDistanceClaw > self.distanceClaw:
-    #         self.currentDistanceClaw-=self.distanceClaw
-        
-    #     self.currentAngleClaw = 360 * self.currentDistanceClaw / self.distanceClaw
-
-    #     return self.currentAngleClaw
-
+    def closeConnection(self):    
+        # Before closing the connection to CoppeliaSim, make sure that the last command sent out had time to arrive. You can guarantee this with (for example):
+        sim.simxGetPingTime(self.clientID)
+        # Now close the connection to CoppeliaSim:
+        sim.simxFinish(self.clientID)
 
     # "Liga" guindaste
     def commandCraneOnOff(self):
         if self.connectionStatus:
-            self.craneStatus= not self.craneStatus
+            if self.craneStatus:
+                sim.simxStopSimulation(self.clientID, sim.simx_opmode_blocking)
+            else:
+                # Inicia simulacao
+                sim.simxStartSimulation(self.clientID, sim.simx_opmode_blocking)
+                sim.simxSetJointTargetPosition(self.clientID,self.boom,0,sim.simx_opmode_continuous)
+                sim.simxSetJointTargetPosition(self.clientID,self.crane,0,sim.simx_opmode_continuous)
+            self.craneStatus = not self.craneStatus
         return self.craneStatus
 
     def getCraneStatus(self):
@@ -106,7 +110,7 @@ class Connection(object):
     def actionCrane(self, step):
         if self.craneStatus and self.connectionStatus:
             self.getCurrentHeightHook()
-            next_position = self.currentHeightHook + step - 6.6747 # (subtrai offset de altura)
+            next_position = self.currentHeightHook + step - 6.6747 # (subtrai offset de altura do gancho)
             sim.simxSetJointTargetPosition(self.clientID,self.crane,next_position,sim.simx_opmode_continuous)
         return self.craneStatus
 
@@ -115,21 +119,6 @@ class Connection(object):
 
     def commandDown(self, step=1):
         return self.actionCrane(step*-1)
-
-    ######## TODO
-    def actionClaw(self, step):
-        if self.craneStatus and self.connectionStatus:
-            step *= 0.1
-            sim.simxSetJointTargetVelocity(self.clientID, self.claw, step, sim.simx_opmode_oneshot)
-            time.sleep(0.2)
-            sim.simxSetJointTargetVelocity(self.clientID, self.claw,0,sim.simx_opmode_oneshot)
-        return self.craneStatus
-
-    def commandClawUp(self, step=1):
-        return self.actionClaw(step)
-    
-    def commandClawDown(self, step):
-        return self.actionClaw(step*-1)
     
     # Captura o angulo do braco
     def getCurrentAngleClaw(self):
@@ -140,21 +129,30 @@ class Connection(object):
     def getCurrentHeightHook(self):
         self.currentHeightHook = sim.simxGetObjectPosition(self.clientID,self.magnet,-1,sim.simx_opmode_blocking)[-1][-1]
         return self.currentHeightHook
-    
-    #no implemention yet
-    def getCamImage(self, plot = False, save = False):
-        # Save or print Sensor Vision Image
+
+    def getCamImage(self, save = False,number=1):
+         # Save or print Sensor Vision Image
         image = None
         if self.craneStatus and self.connectionStatus:
-            err_code,resolution,image = self.sim.simxGetVisionSensorImage(self.clientID,self.cam,0,sim.simx_opmode_buffer)
-            #img = np.array(image, dtype = np.uint8)
-            #img = img.resize([resolution[0],resolution[1],3])
-            #mpl.imshow(img,origin='lower')
-            #if plot:
-            #    mpl.show()
-            #if save:
-            #    mpl.savefig("teste.jpg")
-        return image
+            if number == 1:
+                err_code,resolution,image = sim.simxGetVisionSensorImage(self.clientID,self.cam,0,sim.simx_opmode_buffer)
+            elif number == 2:
+                err_code,resolution,image = sim.simxGetVisionSensorImage(self.clientID,self.cam2,0,sim.simx_opmode_buffer)
+            if save:
+                if err_code == sim.simx_return_ok:
+                    # basewidth = 192
+                    height, width = resolution
+                    img = np.array(image, dtype = np.uint8)
+                    img.resize([resolution[0],resolution[1],3])
+                    img = np.array(img[::-1], dtype=np.uint8)
+
+                    bytesPerLine = 3 * width
+                 
+                    qImg = QtGui.QImage(img, width, height, bytesPerLine, QtGui.QImage.Format_RGB888)
+                    return qImg
+                else:
+                    return None
+        return None
     
     def getStatusDist(self):
         if self.craneStatus and self.connectionStatus:
@@ -162,9 +160,3 @@ class Connection(object):
             status = sim.simxReadProximitySensor(self.clientID,self.proximity_sensor,sim.simx_opmode_buffer)[1]
             return status
         return -1
-    
-    def closeConnection(self):    
-        # Before closing the connection to CoppeliaSim, make sure that the last command sent out had time to arrive. You can guarantee this with (for example):
-        sim.simxGetPingTime(self.clientID)
-        # Now close the connection to CoppeliaSim:
-        sim.simxFinish(self.clientID)
