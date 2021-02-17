@@ -116,4 +116,4 @@ Ferramentas para análise e modelagem de sistemas e gestão ágil de projeto
 00:00 Apresentação da Parte Teórica
 40:25 Execução do Sistema
 Video:
-[![Apresentação Projeto](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZzcGPicBU9NXvwXFtasGBq2b090ZGnQaN2g&usqp=CAU)](https://www.youtube.com/watch?v=YCgK2n9LpuQ&feature=youtu.be)
+[![Apresentação Projeto](https://image.flaticon.com/icons/png/512/174/174883.png)](https://www.youtube.com/watch?v=YCgK2n9LpuQ&feature=youtu.be)
