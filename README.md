@@ -116,4 +116,4 @@ Ferramentas para análise e modelagem de sistemas e gestão ágil de projeto
 00:00 Apresentação da Parte Teórica
 40:25 Execução do Sistema
 Video:
-[![Apresentação Projeto](https://igd-wp-uploads-pluginaws.s3.amazonaws.com/wp-content/uploads/2017/05/24140906/quanto-custa-anunciar-no-youtube.png)](https://www.youtube.com/watch?v=YCgK2n9LpuQ&feature=youtu.be)
+[![Apresentação Projeto](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTZzcGPicBU9NXvwXFtasGBq2b090ZGnQaN2g&usqp=CAU)](https://www.youtube.com/watch?v=YCgK2n9LpuQ&feature=youtu.be)
