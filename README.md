@@ -116,4 +116,4 @@ Ferramentas para análise e modelagem de sistemas e gestão ágil de projeto
 00:00 Apresentação da Parte Teórica
 40:25 Execução do Sistema
 Video:
-[![Apresentação Projeto](https://img.youtube.com/vi/YOUTUBE_VIDEO_ID_HERE/0.jpg)](https://www.youtube.com/watch?v=YCgK2n9LpuQ&feature=youtu.be)
+[![Apresentação Projeto](https://igd-wp-uploads-pluginaws.s3.amazonaws.com/wp-content/uploads/2017/05/24140906/quanto-custa-anunciar-no-youtube.png)](https://www.youtube.com/watch?v=YCgK2n9LpuQ&feature=youtu.be)
