@@ -112,8 +112,10 @@ Ferramentas para análise e modelagem de sistemas e gestão ágil de projeto
 - PyQt 5
 - Windows 7,8,8.1,10
 
--  Resultado do Projeto
-00:00 Apresentação da Parte Teórica
-40:25 Execução do Sistema
+- Resultado do Projeto
+- 00:00 Apresentação da Parte Teórica
+- 40:25 Demonstração do Sistema
+
+
 Video:
 [![Apresentação Projeto](https://image.flaticon.com/icons/png/512/174/174883.png)](https://www.youtube.com/watch?v=YCgK2n9LpuQ&feature=youtu.be)
