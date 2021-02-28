@@ -10,7 +10,7 @@
 ##### - Lucas Bispo
 
 
-![execu](https://github.com/jesimonbarreto/TeleoperatedCrane/blob/main/image_ex.png?raw=true)
+![execu](https://github.com/jesimonbarreto/TeleoperatedCrane/blob/master/image_ex.png?raw=true)
 
 
 
