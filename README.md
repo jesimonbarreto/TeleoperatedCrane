@@ -9,6 +9,11 @@
 ##### - Jesimon Barreto
 ##### - Lucas Bispo
 
+
+![execu](https://github.com/jesimonbarreto/TeleoperatedCrane/blob/main/image_ex.png?raw=true)
+
+
+
 #### Objetivos da disciplina:
 1. Participar de todas as etapas de um projeto funcional
 não trivial, indo deste a concepção da ideia até a entrega
