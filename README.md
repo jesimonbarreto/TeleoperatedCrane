@@ -112,10 +112,19 @@ Ferramentas para análise e modelagem de sistemas e gestão ágil de projeto
 • Máquinas de estado
 • SCRUM para a gestão ágil do projeto
 
-####  Resultado:
-- Dependências
+####  Dependências
 - PyQt 5
+- Coppeliasim
 - Windows 7,8,8.1,10
+
+#### Para executar o projeto
+- Instale as dependências (PyQT)
+- Baixe todos os códigos da pasta "GUI" no host cliente
+- Baixe o arquivo da pasta "Crane" no host servidor
+- Edite o arquivo de conexão da pasta "GUI" para o ip do servidor (host que irá executar a simulação)
+- Abra o coppelia, carregue o arquivo da pasta "Crane" e inicie a simulação
+- Execute o arquivo principal da pasta "GUI"
+- Após abrir a gui clique em conectar, depois em ligar e os controles serão liberados.
 
 #### Apresentação do Projeto
 - 00:00 Apresentação da Parte Teórica
