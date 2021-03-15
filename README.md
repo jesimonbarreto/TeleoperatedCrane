@@ -123,7 +123,7 @@ Ferramentas para análise e modelagem de sistemas e gestão ágil de projeto
 - Baixe o arquivo da pasta "Crane" no host servidor
 - Edite o arquivo de conexão da pasta "GUI" para o ip do servidor (host que irá executar a simulação)
 - Abra o coppelia, carregue o arquivo da pasta "Crane" e inicie a simulação
-- Execute o arquivo principal da pasta "GUI"
+- Execute o arquivo gui.py da pasta "GUI"
 - Após abrir a gui clique em conectar, depois em ligar e os controles serão liberados.
 
 #### Apresentação do Projeto
