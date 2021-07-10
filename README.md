@@ -116,9 +116,12 @@ Ferramentas para análise e modelagem de sistemas e gestão ágil de projeto
 - PyQt 5
 - Coppeliasim
 - Windows 7,8,8.1,10
+- Servidor VPN (Hamachi)
 
 #### Para executar o projeto
 - Instale as dependências (PyQT)
+- baixar e instalar servidor hamachi - https://www.vpn.net/ - Link de arquivo de instalação para windows sem problemas https://www.dropbox.com/sh/nwdj2barptvl3r2/AACj-iFxuuJxGm45yrWmLuCSa?dl=0
+- Conectar hosts cliente e servidor na mesma rede utilizando hamachi
 - Baixe todos os códigos da pasta "GUI" no host cliente
 - Baixe o arquivo da pasta "Crane" no host servidor
 - Edite o arquivo de conexão da pasta "GUI" para o ip do servidor (host que irá executar a simulação)
