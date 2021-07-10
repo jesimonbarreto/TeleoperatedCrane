@@ -121,6 +121,7 @@ Ferramentas para análise e modelagem de sistemas e gestão ágil de projeto
 #### Para executar o projeto
 - Instale as dependências (PyQT)
 - baixar e instalar servidor hamachi - https://www.vpn.net/ - Link de arquivo de instalação para windows sem problemas https://www.dropbox.com/sh/nwdj2barptvl3r2/AACj-iFxuuJxGm45yrWmLuCSa?dl=0
+- Em caso de utilizar no windows, instale com o link disponibilizado acima e depois atualize para versão atual (isso evita problemas de utilização do hamachi)
 - Conectar hosts cliente e servidor na mesma rede utilizando hamachi
 - Baixe todos os códigos da pasta "GUI" no host cliente
 - Baixe o arquivo da pasta "Crane" no host servidor
